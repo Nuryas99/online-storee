@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>Корзина — Online Store</title>
+    <style>
+        body { font-family: sans-serif; padding: 20px; }
+        .cart-item { border-bottom: 1px solid #ccc; padding: 10px; display: flex; justify-content: space-between; }
+        .total { font-weight: bold; font-size: 1.2em; margin-top: 20px; color: green; }
+        .btn-clear { background: red; color: white; border: none; padding: 10px; cursor: pointer; border-radius: 5px; }
+        .btn-back { background: #007bff; color: white; text-decoration: none; padding: 10px; border-radius: 5px; display: inline-block; margin-bottom: 20px; }
+    </style>
+</head>
+<body>
+
+    <a href="index.html" class="btn-back">← Вернуться к покупкам</a>
+    <h1>Ваша корзина</h1>
+
+    <div id="cart-content">
+        <!-- Сюда JavaScript выведет список покупок -->
+        Загрузка корзины...
+    </div>
+
+    <div class="total" id="total-price"></div>
+    <br>
+    <button class="btn-clear" onclick="clearCart()">Очистить корзину</button>
+
+    <script>
+        function displayCart() {
+            const cartContent = document.getElementById('cart-content');
+            const totalPriceElement = document.getElementById('total-price');
+            
+            // 1. Достаем товары из памяти
+            let cart = JSON.parse(localStorage.getItem('myCart')) || [];
+
+            if (cart.length === 0) {
+                cartContent.innerHTML = "<p>В корзине пока пусто :(</p>";
+                totalPriceElement.innerText = "";
+                return;
+            }
+
+            // 2. Рисуем список товаров
+            let html = "";
+            let total = 0;
+
+            cart.forEach((item, index) => {
+                html += `
+                    <div class="cart-item">
+                        <span>${item.name}</span>
+                        <span>${item.price} тг.</span>
+                    </div>
+                `;
+                total += item.price;
+            });
+
+            cartContent.innerHTML = html;
+            totalPriceElement.innerText = "Итого к оплате: " + total + " тг.";
+        }
+
+        // Функция для очистки
+        function clearCart() {
+            if (confirm("Вы точно хотите очистить корзину?")) {
+                localStorage.removeItem('myCart');
+                displayCart();
+            }
+        }
+
+        // Запускаем при загрузке
+        window.onload = displayCart;
+    </script>
+</body>
+</html>

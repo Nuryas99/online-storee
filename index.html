@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Online Store — Мой магазин</title>
+    <!-- Подключаем файл с дизайном (красоту) -->
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+    <header>
+        <h1>🛒 Online Store</h1>
+        <nav>
+            <a href="index.html">Главная</a>
+            <a href="cart.html">Корзина (<span id="cart-count">0</span>)</a>
+        </nav>
+    </header>
+
+    <main>
+        <h2>Наши товары</h2>
+        <!-- Вот в этот пустой блок наш JavaScript будет "вклеивать" товары -->
+        <div id="catalog" class="product-grid">
+            <p>Загрузка товаров...</p>
+        </div>
+    </main>
+
+    <!-- ПОДКЛЮЧАЕМ СКРИПТЫ (Твои мозги магазина) -->
+    <!-- Сначала подключаем товары, потом корзину, потом главную логику -->
+    <script>
+    const products = [
+        { id: 1, name: "Крутая кепка", price: 1500 },
+        { id: 2, name: "Худи разработчика", price: 4500 },
+        { id: 3, name: "Клавиатура", price: 12000 }
+    ];
+
+    window.onload = function() {
+        const catalog = document.getElementById('catalog');
+        let html = "";
+        
+        products.forEach(item => {
+            html += `
+                <div style="border: 2px solid #ccc; padding: 15px; margin: 10px; display: inline-block; width: 200px; text-align: center;">
+                    <h3>${item.name}</h3>
+                    <p>${item.price} тг.</p>
+                    <button onclick="addToCart(${item.id})">Купить</button>
+                </div>
+            `;
+        });
+        catalog.innerHTML = html;
+        updateCartCount();
+    };
+
+    function addToCart(productId) {
+        let cart = JSON.parse(localStorage.getItem('myCart')) || [];
+        const product = products.find(p => p.id === productId);
+        cart.push(product);
+        localStorage.setItem('myCart', JSON.stringify(cart));
+        alert("Товар " + product.name + " добавлен в корзину!");
+        updateCartCount();
+    }
+
+    function updateCartCount() {
+        let cart = JSON.parse(localStorage.getItem('myCart')) || [];
+        const countElement = document.getElementById('cart-count');
+        if (countElement) {
+            countElement.innerText = cart.length;
+        }
+    }
+</script>
+</body>
+</html>

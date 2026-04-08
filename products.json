@@ -1,0 +1,23 @@
+[
+  {
+    "id": 1,
+    "name": "Крутая кепка",
+    "price": 1500,
+    "description": "Стильная кепка для кодинга ночью.",
+    "image": "https://via.placeholder.com/150"
+  },
+  {
+    "id": 2,
+    "name": "Худи разработчика",
+    "price": 4500,
+    "description": "Согревает, когда сервер упал.",
+    "image": "https://via.placeholder.com/150"
+  },
+  {
+    "id": 3,
+    "name": "Механическая клавиатура",
+    "price": 12000,
+    "description": "Кликает так громко, что соседи вызовут полицию.",
+    "image": "https://via.placeholder.com/150"
+  }
+]
